@@ -71,6 +71,10 @@ INSERT INTO studio(studio_name)
 	
 INSERT INTO studio(studio_name)
     VALUES('Universal Pictures');
+
+INSERT INTO studio(studio_name)
+    VALUES('Paramount Pictures');
+
 	
 -- insert genre records
 INSERT INTO genre(genre_name)
@@ -82,6 +86,9 @@ INSERT INTO genre(genre_name)
 INSERT INTO genre(genre_name)
     VALUES('Drama');
 
+INSERT INTO genre(genre_name)
+    VALUES('RPG');
+
 -- insert movie records 
 	INSERT INTO film(film_name, film_releaseDate, film_runtime, film_director, studio_id, genre_id) 
     VALUES('Gladiator', '2000', '155', 'Ridley Scott', (SELECT studio_id FROM studio WHERE studio_name = 'Universal Pictures'),(SELECT genre_id FROM genre WHERE genre_name = 'Drama') );
@@ -91,3 +98,5 @@ INSERT INTO film(film_name, film_releaseDate, film_runtime, film_director, studi
 INSERT INTO film(film_name, film_releaseDate, film_runtime, film_director, studio_id, genre_id) 
     VALUES('Get Out', '2017', '104', 'Jordan Peele', (SELECT studio_id FROM studio WHERE studio_name = 'Blumhouse Productions'),(SELECT genre_id FROM genre WHERE genre_name = 'Horror') );
     
+INSERT INTO film(film_name, film_releaseDate, film_runtime, film_director, studio_id, genre_id) 
+    VALUES('Dungeons and Dragons', '2023', '124', 'John Francis Daley', (SELECT studio_id FROM studio WHERE studio_name = 'Paramount Pictures'),(SELECT genre_id FROM genre WHERE genre_name = 'RPG') );
