@@ -32,7 +32,7 @@ def fetch_and_print_results(conn, query, description):
        
 def show_film(cursor, title):
 
-    cursor.execute("select film_name as Name. film_director, genre_name as Genre, studio_name as ‘Studio Name’ from film INNER JOIN genre ON film.genre_id””genre.genre_id INNER JOIN studio ON film.studio_id””studio.studio_id")
+    cursor.execute("select film_name as Name. film_director, genre_name as Genre, studio_name as Studio Name from film INNER JOIN genre ON film.genre_id””genre.genre_id INNER JOIN studio ON film.studio_id””studio.studio_id")
     films = cursor.fetchall()
     print("\n – {} –".format(title))
     for film in films:
@@ -64,41 +64,51 @@ def main():
         
         fetch_and_print_results(
             conn, "SELECT film_name as Name, film_director as Director, genre_name as Genre, studio_name as 'Studio Name' from film INNER JOIN genre ON film.genre_id=genre.genre_id INNER JOIN studio ON film.studio_id=studio.studio_id","DISPLAYING FILMS")
-                
-        # Create a cursor
-        cursor = conn.cursor()
+    
+    mycursor = conn.cursor()
+
+    sql = "INSERT INTO studio (studio_id, studio_name) VALUES (%s, %s)"
+    val = (16, " Paramount Pictures")
+    mycursor.execute(sql, val)     
+    conn.commit()
+
+    sql = "INSERT INTO genre (genre_id, genre_name) VALUES (%s, %s)"
+    val = (16, "RPG")
+    mycursor.execute(sql, val)     
+    conn.commit()
+
+        # Create a cursor 
+    mycursor = conn.cursor()
         # Create table
-        cursor.execute("INSERT INTO film VALUES('Dungeons & Dragons: Honor Among Thieves',', '2023', '124', 'John Francis Daley')")
-        print("Inserted",cursor.rowcount,"row(s) of data. ")
+    sql = "INSERT INTO film (film_name, film_releasedate, film_runtime, film_director, studio_id, genre_id) VALUES (%s, %s, %s, %s,%s,%s)"
+    val = ('Dungeons & Dragons: Honor Among Thieves', '2023', '124', 'John Francis Daley', 16, 16)
+    mycursor.execute(sql, val)
+    print(mycursor.rowcount, "record inserted.")
         # Commit changes and close connection
-        conn.commit()
-        cursor.close()
+    conn.commit()
+    mycursor.close()
         
-        fetch_and_print_results(
+    fetch_and_print_results(
             conn, "SELECT film_name as Name, film_director as Director, genre_name as Genre, studio_name as 'Studio Name' from film INNER JOIN genre ON film.genre_id=genre.genre_id INNER JOIN studio ON film.studio_id=studio.studio_id","DISPLAYING FILMS AFTER INSERT")
 
-        mycursor = conn.cursor()
+    mycursor = conn.cursor()
 
-        sql = "UPDATE film SET = 'Alien' WHERE genre = 'horror'"
+    sql = "UPDATE genre SET genre_name = 'Horror' WHERE genre_name = 'Scifi'"
 
-        mycursor.execute(sql)
-        conn.commit()
-        fetch_and_print_results(
+    mycursor.execute(sql)
+    conn.commit()
+    fetch_and_print_results(
             conn, "SELECT film_name as Name, film_director as Director, genre_name as Genre, studio_name as 'Studio Name' from film INNER JOIN genre ON film.genre_id=genre.genre_id INNER JOIN studio ON film.studio_id=studio.studio_id","DISPLAYING FILMS AFTER UPDATE")
-        mycursor = conn.cursor()
+    mycursor = conn.cursor()
 
-        sql = "DELETE FROM film WHERE film_name = 'Gladiator'"
-
-        mycursor.execute(sql)
-
-        fetch_and_print_results(
+    sql = "DELETE FROM film WHERE film_name = 'Gladiator'"
+    mycursor.execute(sql)   
+    fetch_and_print_results(
             conn, "SELECT film_name as Name, film_director as Director, genre_name as Genre, studio_name as 'Studio Name' from film INNER JOIN genre ON film.genre_id=genre.genre_id INNER JOIN studio ON film.studio_id=studio.studio_id","DISPLAYING FILMS AFTER DELETE")
 
-        conn.commit()
+    conn.commit()
 
     conn.close()
 
 if __name__ == "__main__":
     main()
-
-    
