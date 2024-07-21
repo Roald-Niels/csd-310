@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS deliveries;
 DROP TABLE IF EXISTS inventory;
 DROP TABLE IF EXISTS wine;
 DROP TABLE IF EXISTS supplier;
-
+DROP TABLE IF EXISTS distributor;
 -- create the wine distribution table
 CREATE TABLE wine (
     wine_id     INT             NOT NULL        AUTO_INCREMENT,
@@ -109,6 +109,13 @@ CREATE TABLE department (
     FOREIGN KEY(employee_id)
         REFERENCES employee(employee_id)
 );
+-- create distributor table and set foreign key
+CREATE TABLE distributor (
+    distributor_id INT NOT NULL AUTO_INCREMENT,
+    distributor_name VARCHAR(75) NOT NULL,
+    PRIMARY KEY(distributor_id)
+);
+
 
 -- insert wine records
 INSERT INTO wine (wine_id, wine_type) VALUES
@@ -181,6 +188,13 @@ INSERT INTO department (department_id, department_name, employee_id) VALUES
     (15692, 'Distribution', 21),
     (15620, 'Marketing', 23),
     (15646, 'Accounting', 24);
+
+-- Insert distributor records
+INSERT INTO distributor (distributor_id, distributor_name) VALUES
+(1, 'Wine Factions'),
+(2, 'Best Wines'),
+(3, 'The Wine Euporium'),
+(4, 'Wine World');
 
 -- Additional INSERT statements to associate other employees with departments
 INSERT INTO department (department_name, employee_id)
